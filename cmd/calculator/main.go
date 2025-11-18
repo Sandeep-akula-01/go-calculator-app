@@ -1,0 +1,72 @@
+package main
+
+import (
+	"bufio"
+	"fmt"
+	"os"
+	"strconv"
+	"strings"
+)
+
+func main() {
+	fmt.Println("HELLO BATCH16d AWS DEVOPS CHAMPS, I am a calculator app ....")
+
+	for {
+		// Read input from the user
+		reader := bufio.NewReader(os.Stdin)
+		fmt.Print("Enter any calculation (Example: 1 + 2 OR 2 * 5) \n(Type 'exit' to quit): ")
+		text, _ := reader.ReadString('\n')
+
+		// Trim the newline character from the input
+		text = strings.TrimSpace(text)
+
+		// Check if the user entered "exit" to quit the program
+		if text == "exit" {
+			fmt.Println("Exiting... Goodbye! 👋")
+			break
+		}
+
+		// Split the input into three parts: left operand, operator, right operand
+		parts := strings.Split(text, " ")
+		if len(parts) != 3 {
+			fmt.Println("Invalid input. Try again. (Example: 3 + 4)")
+			continue
+		}
+
+		// Convert the operands to integers
+		left, err := strconv.Atoi(parts[0])
+		if err != nil {
+			fmt.Println("Invalid number:", parts[0])
+			continue
+		}
+		right, err := strconv.Atoi(parts[2])
+		if err != nil {
+			fmt.Println("Invalid number:", parts[2])
+			continue
+		}
+
+		// Perform the calculation based on the operator
+		var result int
+		switch parts[1] {
+		case "+":
+			result = left + right
+		case "-":
+			result = left - right
+		case "*":
+			result = left * right
+		case "/":
+			if right == 0 {
+				fmt.Println("Error: Division by zero is not allowed.")
+				continue
+			}
+			result = left / right
+		default:
+			fmt.Println("Invalid operator. Use +, -, *, or /")
+			continue
+		}
+
+		// Print the result
+		fmt.Printf("Result: %d\n", result)
+	}
+}
+
